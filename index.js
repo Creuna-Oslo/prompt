@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
-const chalk = require("chalk");
-const cloneDeep = require("lodash/cloneDeep");
-const readline = require("readline");
+const chalk = require('chalk');
+const cloneDeep = require('lodash/cloneDeep');
+const readline = require('readline');
 
 let rl;
 
@@ -24,7 +24,7 @@ const ask = (questions, callback) => {
   // Find an unanswered question
   const [questionKey, question] =
     Object.entries(questions).find(
-      ([_, question]) => typeof question.value === "undefined"
+      ([_, question]) => typeof question.value === 'undefined'
     ) || [];
 
   if (question) {
@@ -52,16 +52,16 @@ const ask = (questions, callback) => {
 const parseAnswer = (answer, { type, optional }) => {
   switch (type) {
     case Boolean:
-      return answer.toLowerCase() === "y";
+      return answer.toLowerCase() === 'y';
     default:
-      return answer || (optional ? "" : undefined);
+      return answer || (optional ? '' : undefined);
   }
 };
 
 const formatQuestion = ({ type, text }) => {
   switch (type) {
     case Boolean:
-      return `${text} ${chalk.dim("(Y/N)")}: `;
+      return `${text} ${chalk.dim('(Y/N)')}: `;
     default:
       return `${text}: `;
   }
