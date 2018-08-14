@@ -2,22 +2,19 @@
 const chalk = require('chalk');
 const cloneDeep = require('lodash/cloneDeep');
 const readline = require('readline');
-
-let rl;
+const readlineSync = require('readline-sync');
 
 module.exports = (questions = {}) => {
-  rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
+  // Transform questions with string shorthand to question objects
+  const parsedQuestions = Object.entries(questions).reduce(
+    (accum, [key, question]) =>
+      Object.assign(accum, {
+        [key]: typeof question === 'string' ? { text: question } : question
+      }),
+    {}
+  );
 
-  return new Promise(resolve => {
-    ask(cloneDeep(questions), answers => {
-      rl.close();
-
-      resolve(answers);
-    });
-  });
+  return ask(parsedQuestions);
 };
 
 const ask = (questions, callback) => {
@@ -29,22 +26,25 @@ const ask = (questions, callback) => {
 
   if (question) {
     // Ask it
-    rl.question(formatQuestion(question), answer => {
-      const questionsWithAnswer = Object.assign({}, questions, {
-        [questionKey]: Object.assign({}, question, {
-          value: parseAnswer(answer, question)
-        })
-      });
-      ask(questionsWithAnswer, callback);
+    const questionHandler =
+      question.type === Boolean ? readlineSync.keyInYN : readlineSync.question;
+
+    const answer = questionHandler(`${question.text}: `, {
+      hideEchoBack: question.obfuscate
     });
+    const questionsWithAnswer = Object.assign({}, questions, {
+      [questionKey]: Object.assign({}, question, {
+        value: parseAnswer(answer, question)
+      })
+    });
+
+    return ask(questionsWithAnswer, callback);
   } else {
     // Exit if there are no more unanswered questions
-    callback(
-      Object.entries(questions).reduce(
-        (accum, [key, question]) =>
-          Object.assign({}, accum, { [key]: question.value }),
-        {}
-      )
+    return Object.entries(questions).reduce(
+      (accum, [key, question]) =>
+        Object.assign({}, accum, { [key]: question.value }),
+      {}
     );
   }
 };
@@ -52,17 +52,10 @@ const ask = (questions, callback) => {
 const parseAnswer = (answer, { type, optional }) => {
   switch (type) {
     case Boolean:
-      return answer.toLowerCase() === 'y';
+      // readline-sync returns empty string if a key other than 'y' or 'n' is pressed. If answer is not a boolean, keep asking.
+      return typeof answer === 'boolean' ? answer : undefined;
     default:
+      // If answer isn't optional, keep asking
       return answer || (optional ? '' : undefined);
-  }
-};
-
-const formatQuestion = ({ type, text }) => {
-  switch (type) {
-    case Boolean:
-      return `${text} ${chalk.dim('(Y/N)')}: `;
-    default:
-      return `${text}: `;
   }
 };
