@@ -1,7 +1,4 @@
 /* eslint-disable no-use-before-define */
-const chalk = require('chalk');
-const cloneDeep = require('lodash/cloneDeep');
-const readline = require('readline');
 const readlineSync = require('readline-sync');
 
 module.exports = (questions = {}) => {
