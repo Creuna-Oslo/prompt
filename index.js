@@ -14,7 +14,7 @@ module.exports = (questions = {}) => {
   return ask(parsedQuestions);
 };
 
-const ask = (questions, callback) => {
+const ask = questions => {
   // Find an unanswered question
   const [questionKey, question] =
     Object.entries(questions).find(
@@ -35,7 +35,7 @@ const ask = (questions, callback) => {
       })
     });
 
-    return ask(questionsWithAnswer, callback);
+    return ask(questionsWithAnswer);
   } else {
     // Exit if there are no more unanswered questions
     return Object.entries(questions).reduce(
