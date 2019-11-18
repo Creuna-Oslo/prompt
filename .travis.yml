@@ -7,8 +7,8 @@ deploy:
   on:
     branch: master
   skip_cleanup: true
-notifications:
-  webhooks:
-    on_start: always
-    urls:
-      - secure: "lN54pQulabzdopFHiteEGF+aPpxVa7De6UBQP9+/xUipUQ2j0rjcBd3SJ6+fZF/JmAU2dCpB6mUJBkXUxrTUA4JSIqhXq9ZN7kVsK06HKxreFJe2JFTGIjHa+ieqxd+h7oe1RXT2z8B0Cd4O2a0YO7tImklsVIJKyDL+GXE/GR8Ld2yxJn/9BEgjhnwAJ2pnKw3zslvGwSJCQezFMPJa1v6Gw9i14cStmjaeKS7iY2CzPHKou/kKeBu7WJzjySlu6LbdQGIg+17I5gqav5esUU92jFma/sgt+xX4OzxI2abI/4qz9VvaqNl4okXei/mMqtxqNfKvqWzowXwT21q+9+zPpTYl7DJx06DToGo80UgSPYjN7wqpw4WMue5rGvz4fgLxDGsvw6QcT23VUjP055mZJUPkldXG7YSw9BhUKVAeOLPldDMcETqIUirLHe7PEkkBlc1PRSJ3VDYtzzJwBql77TaM8Y42BJmZad4ocH27Znkqem/ksD+qqUcB7+EMFiqzrZ0L4guur9BLkgx93wR9qzO7H5wcko9dSsl3QvE89iNZB4SDXhhp3L3HPe7ZGGkO2DF6a652eQ7Zq7HzKDRHW5WeNmu24BvtlZeTQbf8wZAikzPkDP+iVjcl9xHH7P/1hf0F9G/9xt792SvIO2Rp/kTC24yM1zmxfa3aR24="
+# notifications:
+#   webhooks:
+#     on_start: always
+#     urls:
+#       - secure: "<Encrypted URL here>"
